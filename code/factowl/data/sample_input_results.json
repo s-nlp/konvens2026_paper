@@ -1,0 +1,373 @@
+{
+  "score": 0.8928571428571429,
+  "respond_ratio": 1.0,
+  "decisions": [
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty is a character actor.",
+      "is_supported": true
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty has appeared in numerous movies and TV shows.",
+      "is_supported": true
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty is known for his work as a character actor.",
+      "is_supported": true
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty has had a long career in film and television.",
+      "is_supported": true
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty appeared in 'The Rookie' (2002).",
+      "is_supported": false
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty has made appearances on various television series.",
+      "is_supported": true
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty has built a steady career.",
+      "is_supported": true
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty is an American.",
+      "is_supported": true
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty appeared in 'The Best Little Whorehouse in Texas' (1982).",
+      "is_supported": false
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty has appeared in both independent films and major Hollywood productions.",
+      "is_supported": true
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty appeared in 'Lone Star' (1996).",
+      "is_supported": false
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty often portrays blue-collar or working-class characters.",
+      "is_supported": true
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty typically plays supporting rather than leading roles.",
+      "is_supported": false
+    },
+    {
+      "topic": "Lanny Flaherty",
+      "atom": "Lanny Flaherty often appears in supporting roles.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein spent his later years at Princeton University.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein formulated the equation E=mc².",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein is known for his thoughtful quotes.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein explained the photoelectric effect.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein is remembered for his philosophical reflections on life and humanity.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein is widely regarded as one of the greatest scientists in history.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein fled Nazi Germany in 1933.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "The photoelectric effect helped establish quantum theory.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein's insights continue to influence scientific research today.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein later became an American citizen.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein was born in 1879.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein was born in Germany.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein later warned about nuclear weapons.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein advocated for civil rights.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein died in 1955.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein won the Nobel Prize for his work on the photoelectric effect.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein's work bridged classical and modern physics.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein's theory of relativity revolutionized our understanding of space, time, and gravity.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein's theories fundamentally changed physics and our understanding of the universe.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein laid the groundwork for modern cosmology and nuclear physics.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein won the Nobel Prize in Physics in 1921.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein was a German-born theoretical physicist.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein later became a Swiss citizen.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein developed the theory of relativity.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein is known for his distinctive appearance.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein initially advocated for pacifism.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein is remembered for his brilliant scientific mind.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein developed both special and general theories of relativity.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein is known for his humanitarian views.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein's equation E=mc² shows the relationship between mass and energy.",
+      "is_supported": true
+    },
+    {
+      "topic": "Albert Einstein",
+      "atom": "Albert Einstein's work enabled technologies like GPS, nuclear power, and medical imaging.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie's research advanced medical applications of radioactivity.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie moved to Paris to pursue her education.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie married Pierre Curie, a fellow scientist.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie was a physicist.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie was the first woman to win a Nobel Prize.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie founded the Radium Institute in Paris.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie discovered the element polonium.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie's research broke significant barriers for women in science.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie shared the Nobel Prize in Physics with Pierre Curie and Henri Becquerel.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie inspires generations of scientists, particularly women entering STEM fields.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie was a chemist.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie was born in Poland.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie's research laid the foundation for modern atomic physics and chemistry.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie developed techniques for isolating radioactive isotopes.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie's death was likely caused by prolonged exposure to radiation during her research.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie pioneered research on radioactivity.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie made revolutionary contributions to science.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie remains an icon of scientific achievement and perseverance.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie won the Nobel Prize in Chemistry in 1911.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie was the first person to win Nobel Prizes in two different sciences.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie was born Maria Skłodowska.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie was born in 1867.",
+      "is_supported": false
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie won the Nobel Prize in Physics in 1903.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie was the first female professor at the University of Paris.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie died from aplastic anemia.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie died in 1934.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie discovered the element radium.",
+      "is_supported": true
+    },
+    {
+      "topic": "Marie Curie",
+      "atom": "Marie Curie coined the term \"radioactivity\".",
+      "is_supported": true
+    }
+  ],
+  "num_facts_per_response": 24.333333333333332,
+  "init_score": 0.8928571428571429
+}

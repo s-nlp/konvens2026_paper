@@ -1,0 +1,194 @@
+\begin{thebibliography}{20}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Braslavski et~al.(2026)Braslavski, Iarosh, Sushko, Sakhovskiy,
+  Konovalov, Tutubalina, and
+  Panchenko}]{braslavski2026chroniclesridicgeneratingdatasets}
+Pavel Braslavski, Dmitrii Iarosh, Nikita Sushko, Andrey Sakhovskiy, Vasily
+  Konovalov, Elena Tutubalina, and Alexander Panchenko. 2026.
+\newblock \href {https://doi.org/10.48550/ARXIV.2604.00019} {{The Chronicles of
+  RiDiC: Generating Datasets with Controlled Popularity Distribution for
+  Long-form Factuality Evaluation}}.
+\newblock \emph{{CoRR}}, abs/2604.00019.
+
+\bibitem[{Chen et~al.(2023)Chen, Aksitov, Alon, Ren, Xiao, Yin, Prakash,
+  Sutton, Wang, and Zhou}]{universal-self-consistency}
+Xinyun Chen, Renat Aksitov, Uri Alon, Jie Ren, Kefan Xiao, Pengcheng Yin,
+  Sushant Prakash, Charles Sutton, Xuezhi Wang, and Denny Zhou. 2023.
+\newblock \href {https://doi.org/10.48550/ARXIV.2311.17311} {{Universal
+  Self-Consistency for Large Language Model Generation}}.
+\newblock \emph{{CoRR}}, abs/2311.17311.
+
+\bibitem[{Ji et~al.(2023)Ji, Lee, Frieske, Yu, Su, Xu, Ishii, Bang, Madotto,
+  and Fung}]{DBLP:journals/csur/JiLFYSXIBMF23}
+Ziwei Ji, Nayeon Lee, Rita Frieske, Tiezheng Yu, Dan Su, Yan Xu, Etsuko Ishii,
+  Yejin Bang, Andrea Madotto, and Pascale Fung. 2023.
+\newblock \href {https://doi.org/10.1145/3571730} {{Survey of Hallucination in
+  Natural Language Generation}}.
+\newblock \emph{{{ACM} Comput. Surv.}}, 55(12):248:1--248:38.
+
+\bibitem[{Kim et~al.(2026)Kim, Yang, Min, and Jung}]{reasc}
+Junseok Kim, Nakyeong Yang, Kyungmin Min, and Kyomin Jung. 2026.
+\newblock \href {https://aclanthology.org/2026.findings-acl.1085/}
+  {{Reliability-Aware Adaptive Self-Consistency for Efficient Sampling in {LLM}
+  Reasoning}}.
+\newblock In \emph{Findings of the Association for Computational Linguistics,
+  {ACL} 2026, San Diego, California, United States, July 2-7, 2026}, pages
+  21575--21590. Association for Computational Linguistics.
+
+\bibitem[{Mallen et~al.(2023)Mallen, Asai, Zhong, Das, Khashabi, and
+  Hajishirzi}]{popqa}
+Alex Mallen, Akari Asai, Victor Zhong, Rajarshi Das, Daniel Khashabi, and
+  Hannaneh Hajishirzi. 2023.
+\newblock \href {https://doi.org/10.18653/V1/2023.ACL-LONG.546} {{When Not to
+  Trust Language Models: Investigating Effectiveness of Parametric and
+  Non-Parametric Memories}}.
+\newblock In \emph{Proceedings of the 61st Annual Meeting of the Association
+  for Computational Linguistics (Volume 1: Long Papers), {ACL} 2023, Toronto,
+  Canada, July 9-14, 2023}, pages 9802--9822. Association for Computational
+  Linguistics.
+
+\bibitem[{Marina et~al.(2026)Marina, Moskovskiy, Pletenev, Salnikov, Panchenko,
+  and Moskvoretskii}]{marina-etal-2026-boosting}
+Maria Marina, Daniil Moskovskiy, Sergey Pletenev, Mikhail Salnikov, Alexander
+  Panchenko, and Viktor Moskvoretskii. 2026.
+\newblock \href {https://doi.org/10.18653/v1/2026.acl-srw.89} {Boosting
+  self-consistency with ranking}.
+\newblock In \emph{Proceedings of the 64th Annual Meeting of the Association
+  for Computational Linguistics (Volume 4: Student Research Workshop)}, pages
+  1017--1032, San Diego, California, United States. Association for
+  Computational Linguistics.
+
+\bibitem[{Maynez et~al.(2020)Maynez, Narayan, Bohnet, and
+  McDonald}]{DBLP:conf/acl/MaynezNBM20}
+Joshua Maynez, Shashi Narayan, Bernd Bohnet, and Ryan~T. McDonald. 2020.
+\newblock \href {https://doi.org/10.18653/V1/2020.ACL-MAIN.173} {{On
+  Faithfulness and Factuality in Abstractive Summarization}}.
+\newblock In \emph{Proceedings of the 58th Annual Meeting of the Association
+  for Computational Linguistics, {ACL} 2020, Online, July 5-10, 2020}, pages
+  1906--1919. Association for Computational Linguistics.
+
+\bibitem[{Min et~al.(2023)Min, Krishna, Lyu, Lewis, Yih, Koh, Iyyer,
+  Zettlemoyer, and Hajishirzi}]{min-etal-2023-factscore}
+Sewon Min, Kalpesh Krishna, Xinxi Lyu, Mike Lewis, Wen{-}tau Yih, Pang~Wei Koh,
+  Mohit Iyyer, Luke Zettlemoyer, and Hannaneh Hajishirzi. 2023.
+\newblock \href {https://doi.org/10.18653/V1/2023.EMNLP-MAIN.741} {{FActScore:
+  Fine-grained Atomic Evaluation of Factual Precision in Long Form Text
+  Generation}}.
+\newblock In \emph{Proceedings of the 2023 Conference on Empirical Methods in
+  Natural Language Processing, {EMNLP} 2023, Singapore, December 6-10, 2023},
+  pages 12076--12100. Association for Computational Linguistics.
+
+\bibitem[{Moskovskiy et~al.(2024)Moskovskiy, Pletenev, and
+  Panchenko}]{moskovskiy-etal-2024-llms}
+Daniil Moskovskiy, Sergey Pletenev, and Alexander Panchenko. 2024.
+\newblock \href {https://doi.org/10.18653/v1/2024.findings-emnlp.839} {{LLM}s
+  to replace crowdsourcing for parallel data creation? the case of text
+  detoxification}.
+\newblock In \emph{Findings of the Association for Computational Linguistics:
+  EMNLP 2024}, pages 14361--14373, Miami, Florida, USA. Association for
+  Computational Linguistics.
+
+\bibitem[{Pletenev et~al.(2025)Pletenev, Marina, Moskovskiy, Konovalov,
+  Braslavski, Panchenko, and Salnikov}]{pletenev-etal-2025-much}
+Sergey Pletenev, Maria Marina, Daniil Moskovskiy, Vasily Konovalov, Pavel
+  Braslavski, Alexander Panchenko, and Mikhail Salnikov. 2025.
+\newblock \href {https://aclanthology.org/2025.findings-naacl.243/} {{How Much
+  Knowledge Can You Pack into a {L}o{RA} Adapter without Harming {LLM}?}}
+\newblock In \emph{Findings of the Association for Computational Linguistics:
+  NAACL 2025}, pages 4309--4322, Albuquerque, New Mexico. Association for
+  Computational Linguistics.
+
+\bibitem[{Sakhovskiy et~al.(2026)Sakhovskiy, Sushko, Marina, Konovalov,
+  Tutubalina, Panchenko, and Braslavski}]{factowl}
+Andrey Sakhovskiy, Nikita Sushko, Maria Marina, Vasily Konovalov, Elena
+  Tutubalina, Alexander Panchenko, and Pavel Braslavski. 2026.
+\newblock \href {https://doi.org/10.1145/3805712.3808373} {{FactOWL: {A}
+  Cost-Efficient Tool for Long-Form Factuality Evaluation}}.
+\newblock In \emph{Proceedings of the 49th International {ACM} {SIGIR}
+  Conference on Research and Development in Information Retrieval, {SIGIR}
+  2026, MelbourneVICAustralia, July 20-24, 2026}, pages 5209--5214. {ACM}.
+
+\bibitem[{Snell et~al.(2024)Snell, Lee, Xu, and
+  Kumar}]{snell2024scalingllmtesttimecompute}
+Charlie Snell, Jaehoon Lee, Kelvin Xu, and Aviral Kumar. 2024.
+\newblock \href {https://doi.org/10.48550/ARXIV.2408.03314} {{Scaling {LLM}
+  Test-Time Compute Optimally can be More Effective than Scaling Model
+  Parameters}}.
+\newblock \emph{{CoRR}}, abs/2408.03314.
+
+\bibitem[{Taubenfeld et~al.(2025)Taubenfeld, Sheffer, Ofek, Feder, Goldstein,
+  Gekhman, and Yona}]{taubenfeld2025confidence}
+Amir Taubenfeld, Tom Sheffer, Eran Ofek, Amir Feder, Ariel Goldstein, Zorik
+  Gekhman, and Gal Yona. 2025.
+\newblock \href {https://doi.org/10.18653/V1/2025.FINDINGS-ACL.1030}
+  {{Confidence Improves Self-Consistency in LLMs}}.
+\newblock In \emph{Findings of the Association for Computational Linguistics,
+  {ACL} 2025, Vienna, Austria, July 27 - August 1, 2025}, volume {ACL} 2025 of
+  \emph{Findings of {ACL}}, pages 20090--20111. Association for Computational
+  Linguistics.
+
+\bibitem[{Team(2024)}]{llama3}
+Llama Team. 2024.
+\newblock \href {https://doi.org/10.48550/ARXIV.2407.21783} {{The Llama 3 Herd
+  of Models}}.
+\newblock \emph{{CoRR}}, abs/2407.21783.
+
+\bibitem[{Thirukovalluru et~al.(2024)Thirukovalluru, Huang, and
+  Dhingra}]{thirukovalluru-etal-2024-atomic}
+Raghuveer Thirukovalluru, Yukun Huang, and Bhuwan Dhingra. 2024.
+\newblock \href {https://doi.org/10.18653/V1/2024.EMNLP-MAIN.706} {{Atomic
+  Self-Consistency for Better Long Form Generations}}.
+\newblock In \emph{Proceedings of the 2024 Conference on Empirical Methods in
+  Natural Language Processing, {EMNLP} 2024, Miami, FL, USA, November 12-16,
+  2024}, pages 12681--12694. Association for Computational Linguistics.
+
+\bibitem[{Vazhentsev et~al.(2026)Vazhentsev, Marina, Moskovskiy, Pletenev,
+  Seleznyov, Salnikov, Tutubalina, Konovalov, Nikishina, Panchenko, and
+  Moskvoretskii}]{vazhentsev2026leveragingllmparametricknowledge}
+Artem Vazhentsev, Maria Marina, Daniil Moskovskiy, Sergey Pletenev, Mikhail
+  Seleznyov, Mikhail Salnikov, Elena Tutubalina, Vasily Konovalov, Irina
+  Nikishina, Alexander Panchenko, and Viktor Moskvoretskii. 2026.
+\newblock \href {https://arxiv.org/abs/2603.05471} {{Leveraging LLM Parametric
+  Knowledge for Fact Checking without Retrieval}}.
+\newblock \emph{Preprint}, arXiv:2603.05471.
+
+\bibitem[{Wang et~al.(2023)Wang, Wei, Schuurmans, Le, Chi, Narang, Chowdhery,
+  and Zhou}]{self-consistency}
+Xuezhi Wang, Jason Wei, Dale Schuurmans, Quoc~V. Le, Ed~H. Chi, Sharan Narang,
+  Aakanksha Chowdhery, and Denny Zhou. 2023.
+\newblock \href {https://openreview.net/forum?id=1PL1NIMMrw} {{Self-Consistency
+  Improves Chain of Thought Reasoning in Language Models}}.
+\newblock In \emph{The Eleventh International Conference on Learning
+  Representations, {ICLR} 2023, Kigali, Rwanda, May 1-5, 2023}. OpenReview.net.
+
+\bibitem[{Wei et~al.(2024)Wei, Yang, Song, Lu, Hu, Huang, Tran, Peng, Liu,
+  Huang, Du, and Le}]{DBLP:conf/nips/WeiYSLH0TPLHDL24}
+Jerry Wei, Chengrun Yang, Xinying Song, Yifeng Lu, Nathan Hu, Jie Huang, Dustin
+  Tran, Daiyi Peng, Ruibo Liu, Da~Huang, Cosmo Du, and Quoc~V. Le. 2024.
+\newblock \href
+  {http://papers.nips.cc/paper\%5Ffiles/paper/2024/hash/937ae0e83eb08d2cb8627fe1def8c751-Abstract-Conference.html}
+  {{Long-form factuality in large language models}}.
+\newblock In \emph{Advances in Neural Information Processing Systems 37: Annual
+  Conference on Neural Information Processing Systems 2024, NeurIPS 2024,
+  Vancouver, BC, Canada, December 10 - 15, 2024}.
+
+\bibitem[{Wu et~al.(2025)Wu, Sun, Li, Welleck, and Yang}]{Wu2024InferenceSL}
+Yangzhen Wu, Zhiqing Sun, Shanda Li, Sean Welleck, and Yiming Yang. 2025.
+\newblock \href {https://openreview.net/forum?id=VNckp7JEHn} {{Inference
+  Scaling Laws: An Empirical Analysis of Compute-Optimal Inference for {LLM}
+  Problem-Solving}}.
+\newblock In \emph{The Thirteenth International Conference on Learning
+  Representations, {ICLR} 2025, Singapore, April 24-28, 2025}. OpenReview.net.
+
+\bibitem[{Zhao et~al.(2024)Zhao, Goyal, Chiu, Jiang, Newman, Ravichander,
+  Chandu, Bras, Cardie, Deng, and Choi}]{wildhallucinations}
+Wenting Zhao, Tanya Goyal, Yu~Ying Chiu, Liwei Jiang, Benjamin Newman,
+  Abhilasha Ravichander, Khyathi~Raghavi Chandu, Ronan~Le Bras, Claire Cardie,
+  Yuntian Deng, and Yejin Choi. 2024.
+\newblock \href {https://doi.org/10.48550/ARXIV.2407.17468}
+  {{WildHallucinations: Evaluating Long-form Factuality in LLMs with Real-World
+  Entity Queries}}.
+\newblock \emph{{CoRR}}, abs/2407.17468.
+
+\end{thebibliography}

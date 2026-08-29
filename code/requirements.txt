@@ -1,0 +1,24 @@
+# Stage 1 (GPU scoring / aggregation)
+vllm>=0.5
+torch>=2.0
+transformers>=4.29.2
+datasets
+huggingface_hub
+sentence_transformers>=2.2.2
+rank_bm25
+spacy
+
+# Used by factowl internals (CJK tokenization, retrieval, verification)
+jieba
+nltk
+wikipedia
+requests
+scipy
+tqdm
+
+# Stage 2-3 (controller + analysis)
+pandas
+numpy
+scikit-learn
+matplotlib
+joblib

@@ -1,0 +1,154 @@
+% ── Color Palette ───────────────────────────────────────────────────────
+\definecolor{neutral_fill}{HTML}{F8F9FA}
+\definecolor{neutral_stroke}{HTML}{6B7280}
+\definecolor{neutral_title}{HTML}{1F2937}
+\definecolor{neutral_sub}{HTML}{4B5563}
+\definecolor{amber_fill}{HTML}{FFFBEB}
+\definecolor{amber_stroke}{HTML}{D97706}
+\definecolor{amber_title}{HTML}{92400E}
+\definecolor{amber_sub}{HTML}{B45309}
+\definecolor{indigo_fill}{HTML}{EEF2FF}
+\definecolor{indigo_stroke}{HTML}{4F46E5}
+\definecolor{indigo_title}{HTML}{3730A3}
+\definecolor{indigo_sub}{HTML}{4F46E5}
+\definecolor{emerald_fill}{HTML}{ECFDF5}
+\definecolor{emerald_stroke}{HTML}{059669}
+\definecolor{emerald_title}{HTML}{065F46}
+\definecolor{emerald_sub}{HTML}{047857}
+
+% ✔ / ✗  symbols
+\newcommand{\cmark}{\textcolor{emerald_stroke}{\ensuremath{\checkmark}}}
+\newcommand{\xmark}{\textcolor{red!65!black}{\ensuremath{\times}}}
+\begin{tikzpicture}[
+  >=Stealth, font=\sffamily,
+  % ── base box ─────────────────────────────────────────────────────────
+  box/.style={rectangle, rounded corners=2.5pt, align=center, inner sep=4pt},
+  box_neutral/.style ={box, fill=neutral_fill,  draw=neutral_stroke,  line width=0.5pt},
+  box_amber/.style   ={box, fill=amber_fill,    draw=amber_stroke,    line width=1.5pt,
+                        minimum height=1.6cm},
+  box_indigo/.style  ={box, fill=indigo_fill,   draw=indigo_stroke,   line width=1pt},
+  box_emerald/.style ={box, fill=emerald_fill,  draw=emerald_stroke,  line width=0.5pt},
+  % ── generation card: left-aligned, small text ────────────────────────
+  gen/.style={box, fill=neutral_fill, draw=neutral_stroke, line width=0.4pt,
+              text width=2.35cm, align=left, inner sep=3pt},
+  % ── arrows ───────────────────────────────────────────────────────────
+  arr/.style={-{Stealth[length=4pt,width=3pt]}, line width=1.2pt, draw=#1},
+  arr/.default=neutral_stroke,
+  % thinner arrows for fan-out/fan-in
+  arr_thin/.style={-{Stealth[length=2.8pt,width=2.2pt]},
+                   line width=0.7pt, draw=neutral_stroke!70},
+  dashline/.style={densely dashed, line width=0.4pt, draw=neutral_sub!60}
+]
+
+%% ── (1) Input ──────────────────────────────────────────────────────────
+\node[box_neutral, text width=2.2cm, inner sep=3pt] (inp) {
+  \textbf{\color{neutral_title}Input}\\[2pt]
+  {\scriptsize\color{neutral_sub}
+   ``Tell me about\\the Jordan River''}
+};
+
+%% ── (2) Sampling ───────────────────────────────────────────────────────
+\node[box_neutral, anchor=west] (sam)
+  at ($(inp.east)+(1.0cm,0)$) {
+  \textbf{\color{neutral_title}Sampling}\\[2pt]
+  {\small\color{neutral_sub}(Self-Consistency)}
+};
+
+%% ── (3) Generation cards  y¹ y² y³ ────────────────────────────────────
+% placed as a vertical column to the right of Sampling
+\node[gen, anchor=west] (y1) at ($(sam.east)+(1.0cm,+1.2cm)$) {
+  % {\scriptsize\textbf{\color{neutral_title}$y^1$}}\\[-3pt]
+  {\tiny \cmark\ 251\,km long}\\[-4pt]
+  {\tiny \xmark\ origin: Turkey}\\[-4pt]
+  {\tiny \cmark\ flows into the Dead Sea}
+};
+
+\node[gen, anchor=west] (y2) at ($(sam.east)+(1.0cm,0)$) {
+  % {\scriptsize\textbf{\color{neutral_title}$y^2$}}\\[-3pt]
+  {\tiny \xmark\ 350\,km long}\\[-4pt]
+  {\tiny \cmark\ flows into the Dead Sea}\\[-4pt]
+  {\tiny \cmark\ sacred in 3\,religions}
+};
+
+\node[gen, anchor=west] (y3) at ($(sam.east)+(1.0cm,-1.2cm)$) {
+  % {\scriptsize\textbf{\color{neutral_title}$y^3$}}\\[-3pt]
+  {\tiny \cmark\ 251\,km long}\\[-4pt]
+  {\tiny \xmark\ flows into Med.\ Sea}\\[-4pt]
+  {\tiny \cmark\ sacred in 3\,religions}
+};
+
+% optional: light bounding box around the three cards
+\draw[dashline, rounded corners=3pt]
+  ($(y1.north west)+(-0.12cm,+0.18cm)$)
+  rectangle
+  ($(y3.south east)+(+0.12cm,-0.18cm)$);
+
+%% ── (4) LLM Aggregation ────────────────────────────────────────────────
+\node[box_amber, anchor=west, text width=2.8cm] (agg)
+  at ($(y2.east)+(1.0cm,0)$) {
+  \textbf{\color{amber_title}LLM aggregation}\\[2pt]
+  {\small\color{amber_sub}(LLMAgg)}\\[2pt]
+  {\small$\hat{y}=A(y^1,\dots,y^K)$}
+};
+
+%% ── (5) Output ─────────────────────────────────────────────────────────
+\node[box_neutral, anchor=west, text width=3.0cm, inner sep=3pt] (out)
+  at ($(agg.east)+(1.0cm,0)$) {
+  \textbf{\color{neutral_title}Output}\\[2pt]
+  {\color{neutral_sub}\parbox[t]{2.8cm}{\scriptsize\centering
+   The Jordan River (251\,km) flows from Lebanon-Syria into the Dead Sea.
+   It is sacred in Jewish, Christian, and Islamic traditions.}}
+};
+
+%% ── (6) FactOWL ────────────────────────────────────────────────────────
+\node[box_emerald, anchor=west] (fact)
+  at ($(out.east)+(0.9cm,0)$) {
+  \textbf{\color{emerald_title}FactOWL}\\[2pt]
+  {\small\color{emerald_sub}fact-level score}
+};
+
+%% ── Adaptive Sampling ──────────────────────────────────────────────────
+% anchored by its north so the gap below sam.south is exact
+\node[box_indigo, anchor=north] (ada)
+  at ($(sam.south)+(0,-2.4cm)$) {
+  \textbf{\color{indigo_title}Adaptive Sampling}\\[2pt]
+  {\small\color{indigo_sub}$g(x)\to\text{predicted }K$}
+};
+
+%% ── Main pipeline arrows ───────────────────────────────────────────────
+\draw[arr] (inp.east)  -- (sam.west);
+\draw[arr] (agg.east)  -- (out.west);
+\draw[arr] (out.east)  -- (fact.west);
+
+%% ── Fan-out: Sampling → y¹ y² y³ ──────────────────────────────────────
+\draw[arr_thin] (sam.east) to[out=0, in=180] (y1.west);
+\draw[arr_thin] (sam.east) --                (y2.west);
+\draw[arr_thin] (sam.east) to[out=0, in=180] (y3.west);
+
+%% ── Fan-in: y¹ y² y³ → LLMAgg ─────────────────────────────────────────
+\draw[arr_thin] (y1.east) to[out=0, in=150] (agg.west);
+\draw[arr_thin] (y2.east) --                (agg.west);
+\draw[arr_thin] (y3.east) to[out=0, in=210] (agg.west);
+
+%% ── Adaptive arrows ────────────────────────────────────────────────────
+\draw[arr={indigo_stroke}]
+  (ada.north) -- node[left, font=\small, text=indigo_sub] {$K$} (sam.south);
+
+% L-shaped: inp.south ↓ then → ada.west
+\draw[arr] (inp.south) |- (ada.west);
+
+%% ── Annotations ────────────────────────────────────────────────────────
+
+% below LLMAgg
+\draw[dashline] (agg.south) -- ++(0,-0.38) coordinate (mid);
+\node[font=\scriptsize, text=neutral_sub, align=center, text width=3.0cm]
+  at ($(mid)+(0,-0.26)$)
+  {merge consistent facts\\remove contradictions};
+
+% right of Adaptive Sampling
+\node[font=\scriptsize, text=neutral_sub, align=left, text width=2.8cm,
+      anchor=west]
+  at ($(ada.east)+(0.38cm,0)$)
+  {Hard inputs$\to$large $K$\\Easy inputs$\to$small$K$};
+
+\end{tikzpicture}
