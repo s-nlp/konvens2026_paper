@@ -57,7 +57,7 @@
 \setbeamercolor{date in head/foot}{fg=neutral}
 
 \title[Adaptive Self-Consistency]{Adaptive Self-Consistency for Long-Form Factuality on Long-Tail Facts}
-\subtitle{Aggregation, saturation, and budget-aware inference}
+\subtitle{Aggregation, metric sensitivity, and audited budget routing}
 \author[D. Moskovskiy et al.]{Daniil Moskovskiy \and Rafael Grigoryan \and Evgenii Shuranov \\ Wenshuai Yin \and Alexander Panchenko}
 \institute{AIRI \textbullet\ Skoltech \textbullet\ MSU \textbullet\ ITMO University \textbullet\ HSE}
 \date{KONVENS 2026}
@@ -71,7 +71,7 @@
 
 \begin{frame}[plain]
   \titlepage
-  \note{Key message: long-form factuality needs more than a single fluent completion. Transition: first make the failure mode concrete, then show how aggregation and adaptive sampling address it.}
+  \note{Key message: aggregation can improve the executed factuality score, but the metric and budget evaluation require careful interpretation. Transition: first define the empirical questions and the audited evaluation.}
 \end{frame}
 
 \begin{frame}{Fluent long answers can hide many factual failures}
@@ -128,12 +128,12 @@
   \vfill
   \begin{block}{Empirical thesis}
     \centering
-    \large \LLMAgg{} provides the main factuality gain; adaptive routing compresses a conservative budget, but does not replace calibration.
+    \large \LLMAgg{} improves the executed \FactOWL{} score; budget conclusions depend on the metric, and adaptive routing remains exploratory.
   \end{block}
   \note{Key message: keep the talk focused on these three questions. Transition: answer them with a controlled multilingual, multi-domain evaluation.}
 \end{frame}
 
-\begin{frame}{Evaluation: long-form facts across popularity tiers}
+\begin{frame}{Evaluation: LLM-judged FactOWL score across tiers}
   \begin{columns}[T,onlytextwidth]
     \column{0.48\textwidth}
       \begin{block}{\RiDiC{} benchmark}
@@ -148,13 +148,16 @@
       \centering
       \textbf{Same generator:} Llama 3.1 8B Instruct
     \column{0.47\textwidth}
-      \begin{block}{Fact-level metric}
-        \begin{align*}
-          F(y) &= \{f_1,\ldots,f_n\}\\[-2pt]
-          \mathrm{Fact}(y) &= \frac{1}{|F(y)|}\sum_{i=1}^{n}\mathbf{1}[f_i\ \text{supported}]
-        \end{align*}
+      \begin{block}{Reported score ($\gamma=10$)}
         \small
-        \FactOWL{} extracts atomic facts and verifies them against the supplied Wikipedia context.
+        \begin{align*}
+          p(y) &= \frac{1}{n}\sum_{i=1}^{n}\mathbf{1}[f_i\ \text{supported}],\\[-2pt]
+          S_{10}(y) &= p(y)\!\begin{cases}
+            1, & n>10,\\
+            \exp(1-10/n), & n\leq 10.
+          \end{cases}
+        \end{align*}
+        \scriptsize Atomic facts and support labels are LLM-judged against the supplied Wikipedia page. For $n=0$, $S_{10}(y)=0$.
       \end{block}
   \end{columns}
   \vspace{0pt}
@@ -175,7 +178,7 @@
       \bottomrule
     \end{tabular}
   \end{center}
-  \note{Key message: the benchmark separates popularity from language and domain, while FactOWL scores precision over atomic claims. The table shows actual RiDiC case entities across those axes. Transition: now show where sampling, synthesis, and routing enter the pipeline.}
+  \note{Key message: all headline tables use the executed gamma-10 score, not plain factual precision. Fact extraction and support verification are model-judged proxies grounded in the supplied page. Transition: now show where sampling and synthesis enter the pipeline.}
 \end{frame}
 
 \begin{frame}{Method: sample, synthesize, score, then route the budget}
@@ -203,37 +206,36 @@
   \end{tikzpicture}
   \vfill
   \begin{itemize}
-    \item \textbf{Single:} one completion, no aggregation.
+    \item \textbf{Single:} candidate 1 from the same fixed pool.
     \item \textbf{LLMAgg:} merge consistent claims and remove contradictions.
-    \item \textbf{Adaptive:} choose $K$ before any candidate is generated.
+    \item \textbf{Adaptive:} exploratory pre-generation choice of $K$.
   \end{itemize}
   \note{Key message: the intervention is content-level synthesis plus a separate pre-generation budget policy. Transition: why synthesis matters becomes clearer when candidate answers disagree.}
 \end{frame}
 
-\begin{frame}{Why synthesis can beat selecting one answer}
-  \begin{center}
-  \color{ink}
-  \begin{tabularx}{0.94\textwidth}{@{}l X X X@{}}
-    \toprule
-    & \textbf{Candidate A} & \textbf{Candidate B} & \textbf{Candidate C}\\
-    \midrule
-    Claim 1 & \con{SUV / MG ZS platform} & \con{electric SUV} & \pos{all-electric sedan}\\
-    Claim 2 & \con{1.5L engine} & \muted{range up to 600 km} & \pos{unveiled in 2023}\\
-    Claim 3 & \muted{manual transmission} & \muted{Tesla Model Y} & \pos{600+ horsepower variant}\\
-    \bottomrule
-  \end{tabularx}
-  \end{center}
+\begin{frame}{Synthesis has two distinct regimes}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.47\textwidth}
+      \begin{block}{Complementary evidence}
+        \begin{itemize}
+          \item Correct claims distributed across candidates.
+          \item Agreement helps recover a shared core.
+          \item Synthesis can exceed every input response.
+        \end{itemize}
+      \end{block}
+    \column{0.47\textwidth}
+      \begin{alertblock}{Correlated error}
+        \begin{itemize}
+          \item Candidates repeat related false claims.
+          \item Agreement is not evidence of truth.
+          \item Aggregation can amplify the wrong signal.
+        \end{itemize}
+      \end{alertblock}
+  \end{columns}
+  \vfill
   \centering
-  {\footnotesize \textit{Example: Xiaomi SU7; Candidate B also mentions a 2022 launch.}}
-  \vspace{7pt}
-  \begin{alertblock}{Aggregation objective}
-    Preserve supported, complementary facts; omit unsupported claims and contradictions.
-  \end{alertblock}
-  \begin{itemize}
-    \item Selection can only inherit the errors of one existing response.
-    \item \LLMAgg{} writes a new response from the pooled evidence.
-  \end{itemize}
-  \note{Key message: this is a precision story, not a recall or oracle-bound story. The best sampled response is a diagnostic; synthesis can produce a stronger new answer. Transition: compare that mechanism with every baseline explicitly.}
+  \large Selection inherits one response; \LLMAgg{} constructs a new response from the pool.
+  \note{Key message: synthesis helps only when the pool contains recoverable complementary evidence. Correlated errors create the opposite regime, so agreement alone is not a safety guarantee. Transition: compare the mechanisms explicitly.}
 \end{frame}
 
 \begin{frame}{Baselines separate agreement, selection, and synthesis}
@@ -243,10 +245,9 @@
     \toprule
     \textbf{Condition} & \textbf{What it does} & \textbf{Deployable?}\\
     \midrule
-    Single & One independently sampled completion & yes\\
+    Single & First completion from the same fixed pool & yes\\
     MC & Majority co-occurrence over responses & yes\\
     MF & Majority voting over normalized atomic facts & yes\\
-    SP (SeqProb) & Select highest mean token log-probability & yes\\
     Best-of-$K$ logprob & Same selector on the matched $K=20$ pool & yes\\
     Best sampled & Oracle picks factuality-best candidate after scoring & no\\
     \LLMAgg{} & LLM synthesizes a new response from the pool & yes\\
@@ -255,60 +256,75 @@
   \end{center}
   \vspace{8pt}
   \begin{block}{Fair comparison}
-    \small The compute-matched best-of-$K$ selector uses the same 20-sample pool as \LLMAgg{}@20; full-budget results use 99 candidates.
+    \small Single is candidate 1 of the shared pool. Matched-$K$ methods use the same first 20 candidates; full-budget results use all 99.
   \end{block}
   \note{Key message: the paper does not compare one vague baseline against one vague method; it isolates response agreement, fact voting, logprob selection, oracle selection, and content synthesis. Transition: the main table shows a consistent ordering.}
 \end{frame}
 
-\begin{frame}{LLM synthesis is the strongest deployable condition}
+\begin{frame}{At matched $K=20$, synthesis leads selection baselines}
   \begin{center}
   \vspace{4pt}
   \color{ink}
-  \begin{tabular}{@{}lrrrrrr@{}}
+  \begin{tabular}{@{}lrrrr@{}}
     \toprule
-    & \textbf{Single} & \textcolor{neutral}{\textbf{Best samp.$^{\ast}$}} & \textbf{MC} & \textbf{MF} & \textbf{SP} & \textbf{\LLMAgg{}@99}\\
+    & \textbf{Single} & \textbf{Best-of-$K$} & \textbf{ReASC} & \textbf{\LLMAgg{}@20}\\
     \midrule
-    English macro & 0.279 & \muted{0.549} & 0.128 & 0.115 & 0.332 & \textbf{\pos{0.578}}\\
-    Chinese macro & 0.322 & \muted{0.634} & 0.201 & 0.028 & 0.394 & \textbf{\pos{0.571}}\\
+    English macro & 0.281 & 0.304 & 0.290 & \textbf{\pos{0.577}}\\
+    Chinese macro & 0.324 & 0.375 & 0.331 & \textbf{\pos{0.564}}\\
     \bottomrule
   \end{tabular}
   \end{center}
-  \vspace{-2pt}
-  {\footnotesize \textcolor{neutral}{$^{\ast}$} Oracle diagnostic: selected after scoring; not deployable.}
   \vspace{8pt}
   \begin{columns}[T,onlytextwidth]
     \column{0.47\textwidth}
       \begin{block}{Across six language--domain cells}
         \begin{itemize}
-          \item \LLMAgg{} is strongest among deployable methods.
+          \item Same first-20 candidate pool.
+          \item \LLMAgg{} leads both selection policies.
           \item Gains are broad, not driven by one domain.
         \end{itemize}
       \end{block}
     \column{0.47\textwidth}
       \begin{alertblock}{Interpretation}
-        \small Synthesis consolidates partially correct material; next: how quickly does that gain saturate?
+        \small These are executed $S_{10}$ scores; they are not plain supported-fact precision.
       \end{alertblock}
   \end{columns}
-  \note{Key message: macro precision rises from 0.279 to 0.578 in English and from 0.322 to 0.571 in Chinese. The gray oracle is not a deployable upper bound because LLMAgg writes a new response. Q\&A: ZH MF=0.028 is an observed anomaly; the paper does not establish a causal explanation. Avoid presenting a hypothesis about Chinese atomic-fact overlap as a finding. Transition: the large gain arrives early, which creates the budget question.}
+  \note{Key message: this is a strictly compute-matched comparison over the same first 20 candidates. LLMAgg reaches 0.577 in English and 0.564 in Chinese, ahead of the first candidate, log-probability selection, and corrected ReASC. Values use the executed gamma-10 score. Transition: quantify how the apparent budget threshold changes with the metric.}
 \end{frame}
 
-\begin{frame}{Budget gains level off around $K=8$ to $K=16$, with domain exceptions}
+\begin{frame}{Operational $K$ thresholds depend on the metric}
   \begin{columns}[T,onlytextwidth]
-    \column{0.64\textwidth}
-      \includegraphics[width=\textwidth]{figures/prefix_scaling_en_zh.pdf}
-    \column{0.32\textwidth}
-      \begin{block}{What the curves show}
-        \begin{itemize}
-          \item Sharp gains at small $K$.
-          \item Saturates by roughly $K=8$ to $K=16$ in many cells.
-          \item EN disasters improves through $K=20$.
-          \item ZH rivers is non-monotonic.
-        \end{itemize}
+    \column{0.47\textwidth}
+      \begin{block}{Executed $S_{10}$: $K_{95}/K_{99}$}
+        \centering\small
+        \begin{tabular}{@{}lrr@{}}
+          \toprule
+          & EN & ZH\\
+          \midrule
+          Cars      & 4/8  & 8/16\\
+          Disasters & 8/20 & 8/16\\
+          Rivers    & 8/16 & 8/16\\
+          \bottomrule
+        \end{tabular}
       \end{block}
-      \vspace{4pt}
-      \small Nested prefixes from one fixed 99-candidate pool; no resampling at each point.
+    \column{0.47\textwidth}
+      \begin{alertblock}{Raw support $p(y)$: $K_{95}/K_{99}$}
+        \centering\small
+        \begin{tabular}{@{}lrr@{}}
+          \toprule
+          & EN & ZH\\
+          \midrule
+          Cars      & 1/1 & 1/8\\
+          Disasters & 1/1 & 2/4\\
+          Rivers    & 1/1 & 4/16\\
+          \bottomrule
+        \end{tabular}
+      \end{alertblock}
   \end{columns}
-  \note{Key message: more samples help, but the saturation point depends on domain and language. Transition: if the curves differ, popularity may also remain a structural source of difficulty.}
+  \vfill
+  \centering
+  \small $K_q$: earliest tested $K\in\{1,2,4,8,16,20\}$ reaching $q\%$ of the $K=20$ score. No formal $K_{\mathrm{sat}}$ is estimated.
+  \note{Key message: the earlier claim of saturation around K=8--16 was metric-dependent. Under the executed gamma-10 score those are useful operational thresholds; under plain supported-fact precision, English reaches the K20 level at K1. Transition: popularity remains a separate structural axis.}
 \end{frame}
 
 \begin{frame}{Aggregation improves tail entities, but the head-to-tail gap remains}
@@ -318,7 +334,7 @@
   \begin{tabular}{@{}llrrrr@{}}
     \toprule
     & & \multicolumn{2}{c}{\textbf{Single}} & \multicolumn{2}{c}{\textbf{LLMAgg@20}}\\
-    \textbf{Lang.} & \textbf{Tier} & \multicolumn{2}{c}{macro Fact} & \multicolumn{2}{c}{macro Fact}\\
+    \textbf{Lang.} & \textbf{Tier} & \multicolumn{2}{c}{macro $S_{10}$} & \multicolumn{2}{c}{macro $S_{10}$}\\
     \midrule
     EN & head  & \muted{0.445} & & \pos{0.828} & \\
     EN & torso & \muted{0.384} & & \pos{0.762} & \\
@@ -338,106 +354,115 @@
       \end{block}
     \column{0.47\textwidth}
       \begin{alertblock}{Implication}\small
-        Aggregation raises precision broadly; long-tail difficulty remains.
+        Aggregation raises executed score broadly; long-tail difficulty remains.
       \end{alertblock}
   \end{columns}
   \vspace{3pt}
   \centering
-  {\footnotesize Values are macro averages over the three domains within each language and tier.}
-  \note{Key message: LLMAgg improves every tier, including tail entities, but does not erase the head--tail gap. Transition: the remaining question is whether the full 99-sample budget is necessary per input.}
+  {\footnotesize Single is candidate 1 from the shared pool; values are macro averages over three domains.}
+  \note{Key message: on the executed gamma-10 score, LLMAgg improves every popularity tier but does not erase the head--tail gap. This is not a claim about an independently sampled Single. Transition: audit the adaptive-budget evidence.}
 \end{frame}
 
-\begin{frame}{Adaptive routing uses pre-generation complexity signals}
+\begin{frame}{The original $K=99$ controller is not held-out evidence}
   \begin{columns}[T,onlytextwidth]
-    \column{0.43\textwidth}
-      \begin{block}{Controller}\small
-        Random forest predicts a budget $K=g(x)$ before generation.
+    \column{0.47\textwidth}
+      \begin{alertblock}{Audit findings}
         \begin{itemize}
-          \item 300 trees; minimum leaf size 3.
-          \item Prompt length, lexical complexity, punctuation, years.
-          \item Language/domain indicators and a domain budget prior.
-          \item No partial output or disagreement features.
+          \item Eight baseline rows created per topic.
+          \item Split performed row-wise, not by topic.
+          \item Nearly every test topic appears in training.
+          \item Raw score joins duplicate repeated titles.
         \end{itemize}
-      \end{block}
-      \vspace{5pt}
-      \centering
-      \textbf{Length + average word length} account for over 60\% of feature importance.
-    \column{0.54\textwidth}
-      \includegraphics[width=0.96\textwidth]{figures/adaptive_feature_importance.pdf}
-  \end{columns}
-  \note{Key message: the router is deliberately simple and pre-generation. It reads input complexity, not model confidence or candidate disagreement. Transition: evaluate the practical tradeoff against the conservative 99-sample reference.}
-\end{frame}
-
-\begin{frame}{Against $K_{\mathrm{full}}=99$: observed savings, retention stays near 1}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.64\textwidth}
-      \includegraphics[width=\textwidth]{figures/adaptive_tradeoff_scatter.pdf}
-    \column{0.32\textwidth}
-      \begin{alertblock}{Main operating result}
-        \centering
-        {\Large \textbf{2--29\%}}\\[-1pt]
-        sampled-generation savings
       \end{alertblock}
-      \vspace{5pt}
-      \begin{block}{Retention targets}\small
+    \column{0.47\textwidth}
+      \begin{block}{Consequences}
         \begin{itemize}
-          \item Target 0.95: retention $0.994$--$1.022$.
-          \item Target 0.99: retention $0.994$--$1.016$.
-          \item Coverage varies by domain and target.
+          \item Feature importance is not interpretable.
+          \item Bootstrap rows are not independent.
+          \item Reported $>99\%$ retention is not a generalization result.
+          \item Savings of 2--29\% remain descriptive only.
         \end{itemize}
       \end{block}
   \end{columns}
-  \vspace{4pt}
+  \vfill
   \centering
-  \small Smaller routed budgets can occasionally score above the full-budget reference because aggregation is not strictly monotonic.
-  \note{Key message: the controller recovers nearly all full-budget precision while reducing sampled generations, especially in cars and disasters. Transition: this claim is explicitly relative to a conservative reference, not a calibrated optimum.}
+  \textbf{The adaptive headline is withdrawn pending a topic-grouped rerun.}
+  \note{Key message: post-audit, the original K99 controller cannot support a held-out routing claim. The leakage comes from expanding each topic over baseline K values before a row-wise split. Transition: deduplicated K20-targeted recomputations give a more informative negative result.}
 \end{frame}
 
-\begin{frame}{Adaptive routing saves against $K=99$, not $K=20$}
+\begin{frame}{Deduplicated $K=20$ reruns save compute but miss targets}
   \begin{columns}[T,onlytextwidth]
     \column{0.47\textwidth}
-      \begin{block}{$K=20$ is a different reference}
+      \begin{block}{Observed range}
         \begin{itemize}
-          \item Budget curves identify $K=20$ as near-saturated.
-          \item Against $K=20$, the controller produces no net savings.
-          \item Predicted budgets average 70.6--96.9 samples.
+          \item Average $K$: \textbf{6.1--8.9}.
+          \item Generation savings: \textbf{56--70\%}.
+          \item Score retention: \textbf{0.85--0.88}.
+          \item Target coverage: \textbf{0.40--0.52}.
+        \end{itemize}
+      \end{block}
+    \column{0.47\textwidth}
+      \begin{alertblock}{Why a range?}
+        \begin{itemize}
+          \item Repeated titles have conflicting saved scores.
+          \item Keep-first versus keep-last changes exact cells.
+          \item Zero-score baselines make ratios undefined.
+          \item The negative conclusion is unchanged.
+        \end{itemize}
+      \end{alertblock}
+  \end{columns}
+  \vfill
+  \centering
+  \textbf{Compute falls, but the requested 0.95/0.99 retention is not achieved.}
+  \note{Key message: after enforcing unique topics and one-to-one score joins, K20-targeted reruns use roughly six to nine samples and save 56--70 percent. Exact cells vary with duplicate resolution, but retention stays around 0.85--0.88 and only 40--52 percent of nonzero-baseline examples meet target. Transition: separate what remains supported from what is still open.}
+\end{frame}
+
+\begin{frame}{Adaptive routing remains an open problem}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.47\textwidth}
+      \begin{block}{Supported after audit}
+        \begin{itemize}
+          \item Deduplicated reruns reduce average $K$.
+          \item Some topics benefit substantially beyond $K=20$.
+          \item Example: Debby, $0.000\to0.622$ from $K=20\to99$.
         \end{itemize}
       \end{block}
       \vspace{5pt}
       \centering
-      \textbf{Savings depend on the reference budget.}
+      \textbf{Per-topic curves are non-monotonic.}
     \column{0.47\textwidth}
-      \begin{alertblock}{Generalization and safety}
+      \begin{alertblock}{Not supported}
         \begin{itemize}
-          \item Held-out-domain coverage drops to roughly 0.24--0.65.
-          \item Routing does not detect inputs where LLMAgg degrades.
-          \item One generator family; evaluator noise remains possible.
+          \item Reliable 0.95/0.99 retention.
+          \item Generalization of the $K=99$ policy.
+          \item Detection of aggregation failures.
+          \item A universal saturation budget.
         \end{itemize}
       \end{alertblock}
       \vspace{5pt}
       \centering
-      \textbf{Same-distribution routing, not a domain-agnostic recipe.}
+      \textbf{Use grouped splits and explicit zero handling.}
   \end{columns}
-  \note{Key message: the strongest caveat is reference sensitivity. The method compresses K=99, but does not beat a hand-calibrated K=20 baseline or solve catastrophic aggregation failures. Transition: close by separating what the evidence supports from what remains open.}
+  \note{Key message: the current evidence supports only an exploratory routing result. Large per-topic gains beyond K20 exist, but the tested features do not reliably identify them. A valid rerun must split by topic, enforce unique score keys, and define zero-baseline behavior before evaluation. Transition: close with the claims that survive the audit.}
 \end{frame}
 
 \begin{frame}{Three takeaways}
   \begin{enumerate}
-    \item \textbf{Synthesis beats selection for long-form factual precision.}\\
-          \small The main gain comes from consolidating complementary facts, not choosing a single ``best'' completion.
+    \item \textbf{Synthesis leads on the executed $S_{10}$ score.}\\
+          \small Single is candidate 1 from the same fixed pool.
     \vspace{6pt}
-    \item \textbf{Sampling gains saturate early, but saturation is heterogeneous.}\\
-          \small Domain and language determine how much additional computation remains useful.
+    \item \textbf{Budget thresholds are metric-dependent.}\\
+          \small No formal or universal $K_{\mathrm{sat}}$ is established.
     \vspace{6pt}
-    \item \textbf{Adaptive routing reduces the $K=99$ budget; it does not beat $K=20$.}\\
-          \small It saves 2--29\% against 99 samples, while $K=20$ sensitivity and failure detection remain open.
+    \item \textbf{Adaptive routing is not yet validated.}\\
+          \small Deduplicated K20 reruns save compute but miss retention targets.
   \end{enumerate}
   \vfill
   \begin{block}{Answer to the opening tension}
     \centering
-    \large Better consolidation matters more than simply generating more answers.
+    \large Aggregation can help; efficient routing requires leakage-free evaluation.
   \end{block}
-  \note{Key message: the paper supports a practical hierarchy: aggregate well first, then calibrate and route the budget. Transition: references, then questions.}
+  \note{Key message: distinguish the executed score from raw factual precision, treat K thresholds as operational and metric-specific, and do not present the original adaptive controller as held-out evidence. Transition: references, then questions.}
 \end{frame}
 
 \begin{frame}{References}
@@ -464,7 +489,7 @@
     {\Huge\bfseries Questions?}\\[14pt]
     {\normalsize\texttt{Daniil Moskovskiy \textbar{} A.Panchenko@skol.tech}}
   \end{center}
-  \note{Close: return to the practical message: aggregate complementary evidence, then spend compute where it is needed. Invite questions about evaluator reliability, budget calibration, and failure detection.}
+  \note{Close: aggregation improves the executed score, while metric sensitivity and adaptive-budget validation remain open. Invite questions about the audit, evaluator reliability, and per-topic non-monotonicity.}
 \end{frame}
 
 \appendix
@@ -474,32 +499,32 @@
   \begin{center}
     \vspace{1.5cm}
     {\Huge\bfseries Backup slides}\\[8pt]
-    {\large Additional tables, definitions, and failure cases}
+    {\large Audited tables, definitions, and case traces}
   \end{center}
   \note{Use these slides for questions about exact per-cell values, policy definitions, dataset filtering, or qualitative behavior.}
 \end{frame}
 
-\begin{frame}{Main comparison by language and domain}
+\begin{frame}{Matched-$K=20$ comparison by language and domain}
   \small
   \begin{center}
   \color{ink}
   \begin{tabular}{@{}llrrr@{}}
     \toprule
-    \textbf{Lang.} & \textbf{Domain} & \textbf{Single} & \textbf{LLMAgg@99} & \textbf{Gain}\\
+    \textbf{Lang.} & \textbf{Domain} & \textbf{Single} & \textbf{LLMAgg@20} & \textbf{Gain}\\
     \midrule
-    EN & rivers    & 0.211 & 0.462 & +0.251\\
-    EN & cars      & 0.344 & 0.653 & +0.309\\
-    EN & disasters & 0.283 & 0.620 & +0.337\\
+    EN & rivers    & 0.211 & 0.463 & +0.252\\
+    EN & cars      & 0.344 & 0.655 & +0.311\\
+    EN & disasters & 0.287 & 0.612 & +0.325\\
     \midrule
-    ZH & rivers    & 0.266 & 0.451 & +0.185\\
-    ZH & cars      & 0.344 & 0.632 & +0.288\\
-    ZH & disasters & 0.355 & 0.631 & +0.276\\
+    ZH & rivers    & 0.269 & 0.442 & +0.173\\
+    ZH & cars      & 0.349 & 0.633 & +0.285\\
+    ZH & disasters & 0.354 & 0.616 & +0.262\\
     \bottomrule
   \end{tabular}
   \end{center}
   \vspace{8pt}
   \begin{block}{Reading the table}
-    \small LLMAgg is the strongest deployable method in every language--domain cell; the oracle best-sampled diagnostic is intentionally excluded from this table.
+    \small Values use executed $S_{10}$ on the same matched subset. Single is candidate 1 from the first-20 pool.
   \end{block}
   \note{Use this slide to answer questions about individual cells behind the macro averages.}
 \end{frame}
@@ -530,41 +555,41 @@
   \note{Use this slide when asked whether synthesis still beats stronger selection signals at a matched budget. ReASC is reported after correcting the topic-level join bug described in the paper.}
 \end{frame}
 
-\begin{frame}{Adaptive policy: definitions and training protocol}
+\begin{frame}{Required protocol for a valid adaptive rerun}
   \begin{columns}[T,onlytextwidth]
     \column{0.52\textwidth}
-      \begin{block}{Reported quantities}\small
+      \begin{block}{Well-defined quantities}\small
         \begin{align*}
           \text{compute savings}
             &= 1-\frac{\sum_i K_i^{\mathrm{adaptive}}}{N\,\Kfull}\\[-2pt]
-          \text{score retention}
-            &= \frac{\mathrm{Fact}(\hat y_{\mathrm{adaptive}})}
-                    {\mathrm{Fact}(\hat y_{\mathrm{full}})}\\[-2pt]
+          \text{aggregate retention}
+            &= \frac{\sum_i S_{10}(\hat y_i^{\mathrm{adaptive}})}
+                    {\sum_i S_{10}(\hat y_i^{\mathrm{full}})}\\[-2pt]
           \text{coverage}
-            &= \Pr[\text{retention meets target}]
+            &= \Pr[S_i^{\mathrm{adaptive}}\geq\tau S_i^{\mathrm{full}}\mid S_i^{\mathrm{full}}>0]
         \end{align*}
       \end{block}
     \column{0.43\textwidth}
-      \begin{block}{Protocol}\small
+      \begin{block}{Leakage controls}\small
         \begin{itemize}
-          \item Five stratified shuffle splits.
-          \item Test fraction: 30\%.
-          \item Split seed: 13.
-          \item Model seed: 13 + fold index.
-          \item Targets: 0.95 and 0.99.
+          \item Group split by language, domain, topic.
+          \item One row per $(\text{topic},K)$ score.
+          \item Report zero-score baselines separately.
+          \item Bootstrap unique topics, not fold rows.
+          \item Freeze metric before model selection.
         \end{itemize}
       \end{block}
   \end{columns}
   \vspace{5pt}
   \centering
-  \small The reported savings count sampled generations; aggregation prompt growth is not included in that relative measure.
-  \note{Use this slide to clarify that savings are defined relative to the number of sampled completions, not total aggregation-token cost.}
+  \small Generation-count savings still exclude aggregation-token cost; report both when deployment cost matters.
+  \note{Use this slide to explain the minimum protocol required before making a new adaptive-routing claim. Aggregate retention avoids averaging unstable per-example ratios, while coverage explicitly conditions on a nonzero baseline.}
 \end{frame}
 
 \begin{frame}{Dataset filtering and FactOWL details}
   \begin{columns}[T,onlytextwidth]
     \column{0.47\textwidth}
-      \begin{block}{Usable-context counts}\small
+      \begin{block}{Saved evaluation rows}\small
         \color{ink}
         \begin{tabular}{@{}lrrr@{}}
           \toprule
@@ -576,46 +601,56 @@
         \end{tabular}
       \end{block}
       \vspace{5pt}
-      \small Filtering requires usable entity titles and supplied Wikipedia contexts.
+      \small Counts are saved evaluated rows, not a fresh recount of cached nonempty contexts.
     \column{0.47\textwidth}
-      \begin{block}{FactOWL score}\small
+      \begin{block}{Executed FactOWL score}\scriptsize
         \begin{align*}
           F(y) &= \{f_1,\ldots,f_n\}\\[-2pt]
-          \mathrm{Fact}(y) &= \frac{1}{n}\sum_i\mathbf{1}[f_i\text{ supported}]
+          p(y) &= \frac{1}{n}\sum_i\mathbf{1}[f_i\text{ supported}]\\[-2pt]
+          S_{10}(y) &= p(y)\!\begin{cases}1,&n>10\\ e^{1-10/n},&n\leq10.\end{cases}
         \end{align*}
-        Verification uses the entity's supplied Wikipedia page; no alternative evidence corpus is queried.
+        \small Verification uses the supplied page; fact extraction and support labels are LLM-generated proxies. For $n=0$, $S_{10}(y)=0$.
       \end{block}
   \end{columns}
-  \note{Use this slide when asked whether the language comparison uses equal sample counts or how the factuality score is constructed.}
+  \note{Use this slide when asked whether language sample counts match or why short answers receive lower scores. The executed score includes a gamma-10 penalty; raw supported-fact precision is retained separately as init score.}
 \end{frame}
 
-\begin{frame}{Qualitative behavior: complementary evidence versus correlated errors}
+\begin{frame}{Audited case: Debby collapses at $K=20$, then recovers}
   \begin{columns}[T,onlytextwidth]
-    \column{0.47\textwidth}
-      \begin{block}{Representative wins}\small
-        \begin{itemize}
-          \item Jiotto Caspita: $+0.415$.
-          \item Blue Nile: $+0.424$.
-          \item Ma Yimoka River: $+0.522$.
-        \end{itemize}
-        \vspace{3pt}
-        Correct facts are fragmented across candidates; synthesis recovers the shared core.
+    \column{0.38\textwidth}
+      \begin{block}{Executed $S_{10}$ curve}\small
+        \centering
+        \begin{tabular}{@{}rr@{}}
+          \toprule
+          $K$ & score\\
+          \midrule
+          1 & 0.221\\
+          2 & 0.428\\
+          4 & 0.500\\
+          8 & 0.118\\
+          16 & 0.083\\
+          20 & 0.000\\
+          32 & 0.125\\
+          64 & 0.286\\
+          99 & 0.622\\
+          \bottomrule
+        \end{tabular}
       \end{block}
-    \column{0.47\textwidth}
-      \begin{alertblock}{Representative failures}\small
+    \column{0.56\textwidth}
+      \begin{alertblock}{What the audit established}\small
         \begin{itemize}
-          \item Hurricane Debby: $-0.548$.
-          \item Hualien earthquake 2024: $-0.740$.
-          \item Vltava River: $-0.556$.
+          \item Single is candidate 1 in the pool.
+          \item Published 0.548 pooled facts from all 99 candidates.
+          \item Correct Single score: 0.221; raw support: 3/5.
+          \item No first-20 candidate identifies 2024.
+          \item Wrong years differ, but errors are correlated.
         \end{itemize}
-        \vspace{3pt}
-        Repeated hallucinations or entity ambiguity can create a confident wrong consensus.
       \end{alertblock}
   \end{columns}
   \vfill
   \centering
-  \textbf{More samples help only when they add recoverable factual signal.}
-  \note{Use this slide to explain why aggregation is powerful but not uniformly safe, and why the current router does not solve catastrophic failures.}
+  \textbf{Evidence of correlated error in this setup, not a causal limitation of Llama.}
+  \note{Use this slide for the Debby question. The earlier 0.548 value was not a Single score but pooled support over all 99 candidate facts. The first 20 candidates contain different wrong years and no correct 2024 identification, so K20 synthesizes a correlated error. K99 recovers in metric score, although its text still does not correctly identify the 2024 storm.}
 \end{frame}
 
 \end{document}
